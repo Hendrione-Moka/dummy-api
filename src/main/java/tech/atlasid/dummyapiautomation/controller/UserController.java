@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tech.atlasid.dummyapiautomation.model.User;
 import tech.atlasid.dummyapiautomation.model.UsersDTO;
@@ -21,8 +22,8 @@ public class UserController {
   UserService userService;
 
   @GetMapping(value = "", produces = "application/json", name = "get all users")
-  public UsersDTO getUsers() {
-    return UsersDTO.builder().data(userService.getUsers()).status("success").build();
+  public UsersDTO getUsers(@RequestParam(value = "") String name) {
+    return UsersDTO.builder().data(userService.getUsers(name)).status("success").build();
   }
 
   @GetMapping(value = "/{id}", produces = "application/json", name = "get user by id")

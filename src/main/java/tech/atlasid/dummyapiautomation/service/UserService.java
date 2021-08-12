@@ -1,8 +1,10 @@
 package tech.atlasid.dummyapiautomation.service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import tech.atlasid.dummyapiautomation.advice.DataMismatchException;
 import tech.atlasid.dummyapiautomation.advice.UserAlreadyExistException;
@@ -19,8 +21,12 @@ public class UserService {
     this.userData = userData;
   }
 
-  public List<User> getUsers() {
-    return userData.getUsers();
+  public List<User> getUsers(String name) {
+    return userData.getUsers().stream()
+        .filter(user -> (user.getFirstName() + user.getLastName()).toLowerCase(Locale.ROOT)
+            .contains(name.toLowerCase(
+                Locale.ROOT)))
+        .collect(Collectors.toList());
   }
 
   public User getUserById(String id) {
